@@ -1,12 +1,13 @@
 extends CharacterBody2D
 
-const MAX_SPEED: float = 200
+const MAX_SPEED: float = 125
+const ACCELERATION_SMOOTHING: int = 25
 
-
-func _process(_delta: float) -> void:
+func _process(delta: float) -> void:
 	var movement_vector = get_movement_vector()
 	var direction = movement_vector.normalized()
-	velocity = direction * MAX_SPEED
+	var tartget_velocity = direction * MAX_SPEED
+	velocity = velocity.lerp(tartget_velocity, 1.0 - (exp(-delta * ACCELERATION_SMOOTHING)))
 	move_and_slide()
 	
 

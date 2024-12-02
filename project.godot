@@ -14,6 +14,14 @@ config/name="BrotatoClone"
 run/main_scene="res://Scenes/Main/main.tscn"
 config/features=PackedStringArray("4.3", "Forward Plus")
 
+[autoload]
+
+GameEvents="*res://Scenes/AutoLoad/game_events.tscn"
+
+[debug]
+
+gdscript/warnings/unused_parameter=0
+
 [display]
 
 window/size/viewport_width=640
@@ -25,6 +33,7 @@ window/stretch/mode="viewport"
 [global_group]
 
 player="The player node"
+enemy=""
 
 [input]
 
@@ -56,7 +65,10 @@ move_down={
 [layer_names]
 
 2d_physics/layer_1="World"
-2d_physics/layer_2="2"
+2d_physics/layer_2="Player"
+2d_physics/layer_3="Enemy"
+2d_physics/layer_4="EnemyCollision"
+2d_physics/layer_5="PlayerPickup"
 
 [rendering]
 

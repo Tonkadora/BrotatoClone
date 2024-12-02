@@ -8,7 +8,7 @@ func _ready() -> void:
 	
 func _process(delta: float) -> void:
 	acquire_target()
-	global_position = global_position.lerp(target_position, 1.0 - exp(-delta * 10))
+	global_position = global_position.lerp(target_position, 1.0 - exp(-delta * 20))
 		 
 func acquire_target() -> void:
 	var player_node = get_tree().get_first_node_in_group("player")
