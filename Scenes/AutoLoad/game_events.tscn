@@ -2,5 +2,5 @@
 
 [ext_resource type="Script" path="res://Scenes/AutoLoad/game_events.gd" id="1_qvlr4"]
 
-[node name="GameEvents" type="Node"]
+[node name="GameEvents" type="Node" groups=["forground_layer"]]
 script = ExtResource("1_qvlr4")

@@ -5,13 +5,15 @@ extends Node
 const MAX_RANGE: float = 150
 
 var damage: int = 5
+var base_wait_time: float
 
 @onready var timer: Timer = $Timer
 
 
 func _ready() -> void:
+	base_wait_time = timer.wait_time
 	timer.timeout.connect(_on_timer_timeout)
-
+	GameEvents.ability_upgrade_added.connect(on_ability_upgrade_added)
 
 func _on_timer_timeout() -> void:
 	var player = get_tree().get_first_node_in_group("player") as Node2D
@@ -33,7 +35,8 @@ func _on_timer_timeout() -> void:
 	)
 	
 	var sword_instance = sword_ability.instantiate() as SwordAbility
-	player.get_parent().add_child(sword_instance)
+	var foreground_layer = get_tree().get_first_node_in_group("foreground_layer")
+	foreground_layer.add_child(sword_instance)
 	
 	sword_instance.hurtbox_component.damage = damage
 	
@@ -42,3 +45,14 @@ func _on_timer_timeout() -> void:
 	
 	var enemy_direction = enemies[0].global_position - sword_instance.global_position
 	sword_instance.rotation = enemy_direction.angle()
+
+
+
+func on_ability_upgrade_added(upgrade: AbilityUpgrade, current_upgrades: Dictionary) -> void:
+	if upgrade.id != "sword_rate":
+		return
+		
+	var percent_reduction = current_upgrades["sword_rate"]["quantity"] * .1
+	timer.wait_time = base_wait_time * (1 - percent_reduction)
+	timer.start()
+	
