@@ -1,0 +1,62 @@
+[gd_scene load_steps=8 format=3 uid="uid://bawjjp1g8r2e4"]
+
+[ext_resource type="Texture2D" uid="uid://c6eo2td7avop5" path="res://Scenes/Ability/AxeAbility/axe.png" id="1_1r13d"]
+[ext_resource type="Script" path="res://Scenes/Ability/AxeAbility/axe_ability.gd" id="1_fqqox"]
+[ext_resource type="PackedScene" uid="uid://14mnhxojbw1b" path="res://Scenes/Component/hurtbox_component.tscn" id="3_6ox74"]
+
+[sub_resource type="Animation" id="Animation_1hcic"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+
+[sub_resource type="Animation" id="Animation_q5snh"]
+resource_name = "spin"
+length = 0.5
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.0, 6.28319]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_pd6rn"]
+_data = {
+"RESET": SubResource("Animation_1hcic"),
+"spin": SubResource("Animation_q5snh")
+}
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_oonj8"]
+
+[node name="AxeAbility" type="Node2D"]
+script = ExtResource("1_fqqox")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_pd6rn")
+}
+autoplay = "spin"
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_1r13d")
+
+[node name="HurtboxComponent" parent="." instance=ExtResource("3_6ox74")]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HurtboxComponent"]
+shape = SubResource("CircleShape2D_oonj8")
