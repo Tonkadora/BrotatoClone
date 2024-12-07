@@ -1,0 +1,95 @@
+[gd_scene load_steps=11 format=3 uid="uid://dg8ll6kbxxugj"]
+
+[ext_resource type="Script" path="res://Scenes/Component/death_component.gd" id="1_pt4lg"]
+[ext_resource type="Texture2D" uid="uid://bro8ntmm0e8rt" path="res://Scenes/GameObject/BasicEnemy/basic_enemy.png" id="1_qxdqt"]
+
+[sub_resource type="Gradient" id="Gradient_ai3kg"]
+colors = PackedColorArray(1, 1, 1, 1, 1, 0.164086, 0.199715, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_kl3qm"]
+gradient = SubResource("Gradient_ai3kg")
+
+[sub_resource type="Curve" id="Curve_co6a4"]
+_data = [Vector2(0.00914635, 1), 0.0, 0.0, 0, 0, Vector2(0.634146, 0.996623), 0.0, 0.0, 0, 0, Vector2(1, 0.0140259), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="CurveTexture" id="CurveTexture_n58f1"]
+curve = SubResource("Curve_co6a4")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_5vavb"]
+direction = Vector3(0, -1, 0)
+spread = 30.0
+initial_velocity_min = 175.0
+initial_velocity_max = 250.0
+angular_velocity_min = -1440.0
+angular_velocity_max = 1440.0
+gravity = Vector3(0, 800, 0)
+scale_curve = SubResource("CurveTexture_n58f1")
+color_ramp = SubResource("GradientTexture1D_kl3qm")
+
+[sub_resource type="Animation" id="Animation_bba58"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("GPUParticles2D:emitting")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+
+[sub_resource type="Animation" id="Animation_c1g8d"]
+resource_name = "default"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("GPUParticles2D:emitting")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/1/type = "method"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(1),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"queue_free"
+}]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_mhd5c"]
+_data = {
+"RESET": SubResource("Animation_bba58"),
+"default": SubResource("Animation_c1g8d")
+}
+
+[node name="DeathComponent" type="Node2D"]
+script = ExtResource("1_pt4lg")
+
+[node name="GPUParticles2D" type="GPUParticles2D" parent="."]
+emitting = false
+amount = 1
+process_material = SubResource("ParticleProcessMaterial_5vavb")
+texture = ExtResource("1_qxdqt")
+lifetime = 0.5
+fixed_fps = 0
+interpolate = false
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_mhd5c")
+}

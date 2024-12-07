@@ -10,6 +10,8 @@ var number_of_enemies = 0
 @onready var dmg_interval_timer = $DmgIntervalTimer
 @onready var health_bar = $HealthBar
 @onready var abilities = $Abilities
+@onready var animation_player = $AnimationPlayer
+@onready var visuals = $Visuals
 
 
 
@@ -28,7 +30,15 @@ func _process(delta: float) -> void:
 	var tartget_velocity = direction * MAX_SPEED
 	velocity = velocity.lerp(tartget_velocity, 1.0 - (exp(-delta * ACCELERATION_SMOOTHING)))
 	move_and_slide()
+	if movement_vector.x != 0 or movement_vector.y != 0:
+		animation_player.play("walk")
+	else:
+		animation_player.play("RESET")
 	
+	var move_sign = sign(movement_vector.x)
+	if move_sign != 0:
+		visuals.scale = Vector2(move_sign, 1)
+		
 
 func get_movement_vector() -> Vector2:
 	var x_movement = Input.get_action_strength("move_right") - Input.get_action_strength("move_left")
@@ -46,6 +56,7 @@ func check_deal_damage() -> void:
 
 func update_health_display() -> void:
 	health_bar.value = health_component.get_health_percent()
+	
 	
 func on_body_entered(body: Node2D) -> void:
 	if not body.is_in_group("enemy"):
