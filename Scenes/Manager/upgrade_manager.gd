@@ -1,25 +1,33 @@
 extends Node
 
-@export var upgrade_pool: Array[AbilityUpgrade]
 @export var experience_manager: Node
 @export var upgrade_screen_scene: PackedScene
 
+const UPGRADE_AXE = preload("res://Resources/Upgrades/axe.tres")
+const UPGRADE_AXE_DAMAGE = preload("res://Resources/Upgrades/axe_damage.tres")
+const UPGRADE_SWORD_DAMAGE = preload("res://Resources/Upgrades/sword_damage.tres")
+const UPGRADE_SWORD_RATE = preload("res://Resources/Upgrades/sword_rate.tres")
+
 var current_upgrades: Dictionary = {}
+var upgrade_pool:WeightedTable = WeightedTable.new()
 
 
 func _ready() -> void:
+	upgrade_pool.add_item(UPGRADE_AXE, 10)
+	upgrade_pool.add_item(UPGRADE_SWORD_RATE, 10)
+	upgrade_pool.add_item(UPGRADE_SWORD_DAMAGE, 10)
+	
 	experience_manager.leveled_up.connect(on_leveled_up)
 	
 	
 func pick_upgrades() -> Array[AbilityUpgrade]:
 	var chosen_upgrades: Array[AbilityUpgrade] = []
-	var filtered_upgrades = upgrade_pool.duplicate()
+
 	
 	for i in 2:
-		if filtered_upgrades.size() == 0:
+		if upgrade_pool.items.size() == chosen_upgrades.size():
 			break
-		var chosen_upgrade = filtered_upgrades.pick_random() as AbilityUpgrade
-		filtered_upgrades = filtered_upgrades.filter(func(upgrade): return upgrade.id != chosen_upgrade.id)
+		var chosen_upgrade = upgrade_pool.pick_item(chosen_upgrades)
 		chosen_upgrades.append(chosen_upgrade)
 	return chosen_upgrades
 	
@@ -38,11 +46,18 @@ func apply_upgrade(upgrade: AbilityUpgrade) -> void:
 	if upgrade.max_quantity > 0:
 		var current_quantity = current_upgrades[upgrade.id]["quantity"]
 		if current_quantity == upgrade.max_quantity:
-			upgrade_pool = upgrade_pool.filter(func(pool_upgrade): return pool_upgrade.id != upgrade.id)	
-			
-	GameEvents.emit_ability_upgrade_added(upgrade, current_upgrades)
+			upgrade_pool.remove_item(upgrade)
 
 	
+	update_upgrade_pool(upgrade)		
+	GameEvents.emit_ability_upgrade_added(upgrade, current_upgrades)
+
+
+func update_upgrade_pool(chosen_upgrade: AbilityUpgrade) -> void:
+	if chosen_upgrade.id == UPGRADE_AXE.id:
+		upgrade_pool.add_item(UPGRADE_AXE_DAMAGE, 10)
+		
+		
 func on_leveled_up(level:int) -> void:
 	var upgrade_screen_instance = upgrade_screen_scene.instantiate()
 	add_child(upgrade_screen_instance)

@@ -86,6 +86,7 @@ amount = 1
 process_material = SubResource("ParticleProcessMaterial_5vavb")
 texture = ExtResource("1_qxdqt")
 lifetime = 0.5
+one_shot = true
 fixed_fps = 0
 interpolate = false
 

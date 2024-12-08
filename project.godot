@@ -36,6 +36,11 @@ player="The player node"
 enemy=""
 entities_layer=""
 foreground_layer=""
+upgrade_card=""
+
+[gui]
+
+theme/custom="res://Resources/Theme/theme.tres"
 
 [input]
 
