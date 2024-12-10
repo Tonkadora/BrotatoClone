@@ -1,6 +1,7 @@
-[gd_scene load_steps=10 format=3 uid="uid://cdk8rirjg7uwd"]
+[gd_scene load_steps=8 format=3 uid="uid://81q06sibbbwq"]
 
-[ext_resource type="Script" path="res://Scenes/UI/ability_upgrade_card.gd" id="1_budyv"]
+[ext_resource type="Script" path="res://Scenes/UI/end_screen_card.gd" id="1_fb150"]
+[ext_resource type="Theme" uid="uid://down1xtqg6022" path="res://Resources/Theme/theme.tres" id="2_mmwss"]
 
 [sub_resource type="Animation" id="Animation_ldgx7"]
 length = 0.001
@@ -124,108 +125,68 @@ _data = {
 "selected": SubResource("Animation_bf5eb")
 }
 
-[sub_resource type="Animation" id="Animation_6lfdj"]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath(".:rotation")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [0.0]
-}
-
-[sub_resource type="Animation" id="Animation_8833f"]
-resource_name = "hover"
-length = 0.3
-step = 0.05
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath(".:rotation")
-tracks/0/interp = 2
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.05, 0.1, 0.3),
-"transitions": PackedFloat32Array(1, 1, 1, 1),
-"update": 0,
-"values": [0.0, -0.0872665, 0.0872665, 0.0]
-}
-
-[sub_resource type="AnimationLibrary" id="AnimationLibrary_jgaro"]
-_data = {
-"RESET": SubResource("Animation_6lfdj"),
-"hover": SubResource("Animation_8833f")
-}
-
-[node name="AbilityUpgradeCard" type="PanelContainer" groups=["upgrade_card"]]
-custom_minimum_size = Vector2(150, 150)
-offset_right = 150.0
-offset_bottom = 150.0
-pivot_offset = Vector2(75, 75)
-script = ExtResource("1_budyv")
+[node name="EndScreenCard" type="PanelContainer"]
+pivot_offset = Vector2(94, 67)
+size_flags_horizontal = 4
+size_flags_vertical = 4
+script = ExtResource("1_fb150")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
 "": SubResource("AnimationLibrary_0guxh")
 }
-
-[node name="HoverAnimationPlayer" type="AnimationPlayer" parent="."]
-libraries = {
-"": SubResource("AnimationLibrary_jgaro")
-}
+autoplay = "in"
 
 [node name="MarginContainer" type="MarginContainer" parent="."]
+custom_minimum_size = Vector2(180, 0)
 layout_mode = 2
-mouse_filter = 2
 theme_override_constants/margin_left = 8
+theme_override_constants/margin_top = 8
 theme_override_constants/margin_right = 8
 theme_override_constants/margin_bottom = 8
 
 [node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
 layout_mode = 2
-mouse_filter = 2
-theme_override_constants/separation = 12
+theme_override_constants/separation = 16
 
-[node name="PanelContainer" type="PanelContainer" parent="MarginContainer/VBoxContainer"]
-layout_mode = 2
-mouse_filter = 2
-theme_type_variation = &"AlternatePanelContainer"
-
-[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/VBoxContainer/PanelContainer"]
-layout_mode = 2
-mouse_filter = 2
-theme_override_constants/margin_top = 5
-
-[node name="NameLabel" type="Label" parent="MarginContainer/VBoxContainer/PanelContainer/MarginContainer"]
+[node name="TitleLabel" type="Label" parent="MarginContainer/VBoxContainer"]
 unique_name_in_owner = true
-custom_minimum_size = Vector2(100, 30)
 layout_mode = 2
+theme = ExtResource("2_mmwss")
 theme_override_colors/font_shadow_color = Color(0.14902, 0.168627, 0.266667, 1)
 theme_override_colors/font_outline_color = Color(0.14902, 0.168627, 0.266667, 1)
 theme_override_constants/shadow_offset_x = 0
 theme_override_constants/shadow_offset_y = 0
 theme_override_constants/outline_size = 8
 theme_override_font_sizes/font_size = 32
-text = "Test Name
-"
+text = "Victory"
 horizontal_alignment = 1
-vertical_alignment = 2
-autowrap_mode = 2
+vertical_alignment = 1
 
 [node name="DescriptionLabel" type="Label" parent="MarginContainer/VBoxContainer"]
 unique_name_in_owner = true
-custom_minimum_size = Vector2(120, 50)
 layout_mode = 2
 theme_override_colors/font_shadow_color = Color(0.14902, 0.168627, 0.266667, 1)
 theme_override_colors/font_outline_color = Color(0.14902, 0.168627, 0.266667, 1)
 theme_override_constants/shadow_offset_x = 0
 theme_override_constants/shadow_offset_y = 0
 theme_override_constants/outline_size = 8
-text = "Write Some Description Here
+text = "You Won
 "
-autowrap_mode = 2
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="RestartButton" type="Button" parent="MarginContainer/VBoxContainer/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Restart
+"
+
+[node name="QuitButton" type="Button" parent="MarginContainer/VBoxContainer/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Quit
+"

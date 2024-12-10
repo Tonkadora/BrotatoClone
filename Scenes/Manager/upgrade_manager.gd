@@ -7,6 +7,7 @@ const UPGRADE_AXE = preload("res://Resources/Upgrades/axe.tres")
 const UPGRADE_AXE_DAMAGE = preload("res://Resources/Upgrades/axe_damage.tres")
 const UPGRADE_SWORD_DAMAGE = preload("res://Resources/Upgrades/sword_damage.tres")
 const UPGRADE_SWORD_RATE = preload("res://Resources/Upgrades/sword_rate.tres")
+const UPGRADE_PLAYER_SPEED = preload("res://Resources/Upgrades/player_speed.tres")
 
 var current_upgrades: Dictionary = {}
 var upgrade_pool:WeightedTable = WeightedTable.new()
@@ -16,7 +17,7 @@ func _ready() -> void:
 	upgrade_pool.add_item(UPGRADE_AXE, 10)
 	upgrade_pool.add_item(UPGRADE_SWORD_RATE, 10)
 	upgrade_pool.add_item(UPGRADE_SWORD_DAMAGE, 10)
-	
+	upgrade_pool.add_item(UPGRADE_PLAYER_SPEED, 5)
 	experience_manager.leveled_up.connect(on_leveled_up)
 	
 	

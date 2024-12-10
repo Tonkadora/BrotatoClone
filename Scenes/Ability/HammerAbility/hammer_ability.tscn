@@ -1,0 +1,20 @@
+[gd_scene load_steps=5 format=3 uid="uid://co2ady0nwu5cq"]
+
+[ext_resource type="Texture2D" uid="uid://cj4ywhbuy0qcx" path="res://Scenes/Ability/HammerAbility/Hammer.png" id="1_pjpg6"]
+[ext_resource type="Script" path="res://Scenes/Ability/HammerAbility/hammer_ability.gd" id="1_tmern"]
+[ext_resource type="PackedScene" uid="uid://14mnhxojbw1b" path="res://Scenes/Component/hurtbox_component.tscn" id="2_dcavq"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_n5k50"]
+
+[node name="HammerAbility" type="Node2D" groups=["hammer_ability"]]
+script = ExtResource("1_tmern")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_pjpg6")
+offset = Vector2(0, -8)
+
+[node name="HurtboxComponent" parent="." instance=ExtResource("2_dcavq")]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HurtboxComponent"]
+position = Vector2(0, -8)
+shape = SubResource("CircleShape2D_n5k50")

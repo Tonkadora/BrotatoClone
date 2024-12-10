@@ -1,9 +1,7 @@
 extends CharacterBody2D
 
-const MAX_SPEED: float = 125
-const ACCELERATION_SMOOTHING: int = 25
-
 var number_of_enemies = 0
+var base_speed = 0
 
 @onready var collision_area_2d = $CollisionArea2D
 @onready var health_component: HealthComponent = $HealthComponent
@@ -12,24 +10,28 @@ var number_of_enemies = 0
 @onready var abilities = $Abilities
 @onready var animation_player = $AnimationPlayer
 @onready var visuals = $Visuals
+@onready var velocity_component: VelocityComponent = $VelocityComponent
 
 
 
 func _ready():
-	update_health_display()
+	base_speed = velocity_component.max_speed
+	
 	collision_area_2d.body_entered.connect(on_body_entered)
 	collision_area_2d.body_exited.connect(on_body_exited)
 	dmg_interval_timer.timeout.connect(on_dmg_interval_timer_timeout)
 	health_component.health_changed.connect(on_health_changed)
 	GameEvents.ability_upgrade_added.connect(on_ability_upgrade_added)
+	update_health_display()
 	
 	
 func _process(delta: float) -> void:
 	var movement_vector = get_movement_vector()
 	var direction = movement_vector.normalized()
-	var tartget_velocity = direction * MAX_SPEED
-	velocity = velocity.lerp(tartget_velocity, 1.0 - (exp(-delta * ACCELERATION_SMOOTHING)))
-	move_and_slide()
+	velocity_component.accelerate_in_direction(direction)
+	velocity_component.move(self)
+
+
 	if movement_vector.x != 0 or movement_vector.y != 0:
 		animation_player.play("walk")
 	else:
@@ -77,13 +79,13 @@ func on_dmg_interval_timer_timeout() -> void:
 
 
 func on_health_changed() -> void:
+	GameEvents.emit_player_damaged()
 	update_health_display()
 
 
 func on_ability_upgrade_added(upgrade: AbilityUpgrade, current_upgrades: Dictionary) -> void:
-	if not upgrade is Ability:
-		return
-		
-	
-	var ability = upgrade as Ability
-	abilities.add_child(ability.ability_controller_scene.instantiate())
+	if upgrade is Ability:
+		var ability = upgrade as Ability
+		abilities.add_child(ability.ability_controller_scene.instantiate())
+	elif upgrade.id == "player_speed":
+		velocity_component.max_speed = base_speed + (base_speed * current_upgrades["player_speed"]["quantity"] * .1)

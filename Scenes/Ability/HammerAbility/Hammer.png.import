@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://cj4ywhbuy0qcx"
-path="res://.godot/imported/tile_0117.png-5ca2cfd7bd5c20a4a2aae91fce51a864.ctex"
+path="res://.godot/imported/Hammer.png-bd9fa9ba7f8d21fe9f431c746f6c2d83.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/KennyALL/Tiles/tile_0117.png"
-dest_files=["res://.godot/imported/tile_0117.png-5ca2cfd7bd5c20a4a2aae91fce51a864.ctex"]
+source_file="res://Scenes/Ability/HammerAbility/Hammer.png"
+dest_files=["res://.godot/imported/Hammer.png-bd9fa9ba7f8d21fe9f431c746f6c2d83.ctex"]
 
 [params]
 

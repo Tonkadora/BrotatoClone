@@ -1,0 +1,8 @@
+[gd_scene load_steps=3 format=3 uid="uid://cc2hakighvjyx"]
+
+[ext_resource type="Script" path="res://Scenes/Ability/HammerAbility/hammer_ability_controller.gd" id="1_mo16p"]
+[ext_resource type="PackedScene" uid="uid://co2ady0nwu5cq" path="res://Scenes/Ability/HammerAbility/hammer_ability.tscn" id="2_oxqng"]
+
+[node name="HammerAbilityController" type="Node"]
+script = ExtResource("1_mo16p")
+hammer_ability_scene = ExtResource("2_oxqng")

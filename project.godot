@@ -37,6 +37,7 @@ enemy=""
 entities_layer=""
 foreground_layer=""
 upgrade_card=""
+hammer_ability=""
 
 [gui]
 
