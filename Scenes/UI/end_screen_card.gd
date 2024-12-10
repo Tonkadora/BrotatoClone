@@ -1,5 +1,6 @@
 extends PanelContainer
 
+signal defeated
 
 @onready var restart_button = %RestartButton
 @onready var quit_button = %QuitButton
@@ -11,11 +12,11 @@ func _ready():
 	restart_button.pressed.connect(on_restart_button_pressed)
 	quit_button.pressed.connect(on_quit_button_pressed)
 	
-	
+
 func set_defeat() -> void:
 	title_label.text = "Defeat"
 	description_label.text = "You Lost"
-	
+	defeated.emit()
 	
 func on_restart_button_pressed() -> void:
 	get_tree().paused = false

@@ -38,3 +38,4 @@ func on_area_entered(area: Area2D) -> void:
 	
 	tween.chain()
 	tween.tween_callback(collect)
+	$RandomStreamPlayerComponent.play_random()

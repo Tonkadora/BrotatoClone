@@ -81,7 +81,8 @@ func on_dmg_interval_timer_timeout() -> void:
 func on_health_changed() -> void:
 	GameEvents.emit_player_damaged()
 	update_health_display()
-
+	$HitRandomStreamPlayerComponent.play_random()
+	
 
 func on_ability_upgrade_added(upgrade: AbilityUpgrade, current_upgrades: Dictionary) -> void:
 	if upgrade is Ability:

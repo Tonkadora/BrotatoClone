@@ -1,5 +1,6 @@
 extends Area2D
 class_name HitboxComponent
+signal hit
 
 @export var health_component: HealthComponent
 
@@ -29,3 +30,4 @@ func on_area_entered(area: Area2D) -> void:
 		format_string = "%0.0f"
 	floating_text.start(str(format_string % hurtbox_component.damage))
 	
+	hit.emit()

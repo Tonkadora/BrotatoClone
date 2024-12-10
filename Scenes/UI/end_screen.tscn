@@ -1,7 +1,9 @@
-[gd_scene load_steps=7 format=3 uid="uid://ct7m6jxvarhr8"]
+[gd_scene load_steps=9 format=3 uid="uid://ct7m6jxvarhr8"]
 
 [ext_resource type="Script" path="res://Scenes/UI/end_screen.gd" id="1_hvw7r"]
 [ext_resource type="PackedScene" uid="uid://81q06sibbbwq" path="res://Scenes/UI/end_screen_card.tscn" id="2_rle0r"]
+[ext_resource type="AudioStream" uid="uid://bxvqq2lvu5t7r" path="res://Assets/Audio/Jingles/Hit jingles/jingles_victory.ogg" id="3_mxp8a"]
+[ext_resource type="AudioStream" uid="uid://dcfqxmcf22bd7" path="res://Assets/Audio/Jingles/Hit jingles/jingles_defeat.ogg" id="4_exv3v"]
 
 [sub_resource type="Animation" id="Animation_0jelt"]
 length = 0.001
@@ -86,3 +88,11 @@ grow_vertical = 2
 
 [node name="EndScreenCard" parent="MarginContainer" instance=ExtResource("2_rle0r")]
 layout_mode = 2
+
+[node name="VictoryStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("3_mxp8a")
+volume_db = -4.0
+
+[node name="DefeatStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("4_exv3v")
+volume_db = -4.0

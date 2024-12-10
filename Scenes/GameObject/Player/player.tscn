@@ -1,11 +1,15 @@
-[gd_scene load_steps=14 format=3 uid="uid://dfubnhuarill5"]
+[gd_scene load_steps=18 format=3 uid="uid://dfubnhuarill5"]
 
 [ext_resource type="Script" path="res://Scenes/GameObject/Player/player.gd" id="1_uthsl"]
 [ext_resource type="Texture2D" uid="uid://bmhie0kkayae" path="res://Scenes/GameObject/Player/player.png" id="2_01yww"]
 [ext_resource type="PackedScene" uid="uid://bcuscpy1ul8qc" path="res://Scenes/Component/health_component.tscn" id="2_4cgpo"]
 [ext_resource type="PackedScene" uid="uid://p4c3q5ibo40e" path="res://Scenes/Ability/SwordAbility/sword_ability_controller.tscn" id="2_ii7cq"]
 [ext_resource type="PackedScene" uid="uid://hilb7jlhxod4" path="res://Scenes/Component/velocity_component.tscn" id="2_uhbn8"]
-[ext_resource type="PackedScene" uid="uid://cc2hakighvjyx" path="res://Scenes/Ability/HammerAbility/hammer_ability_controller.tscn" id="5_scrfp"]
+[ext_resource type="PackedScene" uid="uid://cvqlu7x21ch5j" path="res://Scenes/Component/random_stream_player_2D_component.tscn" id="4_1qlup"]
+[ext_resource type="AudioStream" uid="uid://bmmgw8lsf2g4c" path="res://Assets/Audio/BasicSounds/impactMining_000.ogg" id="5_o1wtb"]
+[ext_resource type="AudioStream" uid="uid://fm45misdgk73" path="res://Assets/Audio/BasicSounds/impactMining_001.ogg" id="6_80i3g"]
+[ext_resource type="AudioStream" uid="uid://cgjg7bo5og23r" path="res://Assets/Audio/BasicSounds/impactMining_002.ogg" id="7_smh67"]
+[ext_resource type="AudioStream" uid="uid://d4bn7dx37k4rh" path="res://Assets/Audio/BasicSounds/impactMining_003.ogg" id="8_tqd35"]
 
 [sub_resource type="Animation" id="Animation_oltsk"]
 length = 0.001
@@ -128,11 +132,12 @@ acceleration = 25.0
 
 [node name="HealthComponent" parent="." instance=ExtResource("2_4cgpo")]
 
+[node name="HitRandomStreamPlayerComponent" parent="." instance=ExtResource("4_1qlup")]
+streams = Array[AudioStream]([ExtResource("5_o1wtb"), ExtResource("6_80i3g"), ExtResource("7_smh67"), ExtResource("8_tqd35")])
+
 [node name="Abilities" type="Node" parent="."]
 
 [node name="SwordAbilityController" parent="Abilities" instance=ExtResource("2_ii7cq")]
-
-[node name="HammerAbilityController" parent="Abilities" instance=ExtResource("5_scrfp")]
 
 [node name="DmgIntervalTimer" type="Timer" parent="."]
 wait_time = 0.5

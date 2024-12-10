@@ -1,7 +1,13 @@
-[gd_scene load_steps=11 format=3 uid="uid://dg8ll6kbxxugj"]
+[gd_scene load_steps=17 format=3 uid="uid://dg8ll6kbxxugj"]
 
 [ext_resource type="Script" path="res://Scenes/Component/death_component.gd" id="1_pt4lg"]
 [ext_resource type="Texture2D" uid="uid://bro8ntmm0e8rt" path="res://Scenes/GameObject/BasicEnemy/basic_enemy.png" id="1_qxdqt"]
+[ext_resource type="PackedScene" uid="uid://cvqlu7x21ch5j" path="res://Scenes/Component/random_stream_player_2D_component.tscn" id="3_8xg06"]
+[ext_resource type="AudioStream" uid="uid://08xv3xsdc4vh" path="res://Assets/Audio/BasicSounds/footstep_carpet_000.ogg" id="4_khprg"]
+[ext_resource type="AudioStream" uid="uid://bikn1sjaw0u7c" path="res://Assets/Audio/BasicSounds/footstep_carpet_001.ogg" id="5_ub4yq"]
+[ext_resource type="AudioStream" uid="uid://bosxq5aboi2s2" path="res://Assets/Audio/BasicSounds/footstep_carpet_002.ogg" id="6_x8rj0"]
+[ext_resource type="AudioStream" uid="uid://eh15keervgts" path="res://Assets/Audio/BasicSounds/footstep_carpet_003.ogg" id="7_myjj3"]
+[ext_resource type="AudioStream" uid="uid://didx3a7aknrt2" path="res://Assets/Audio/BasicSounds/footstep_carpet_004.ogg" id="8_eftnf"]
 
 [sub_resource type="Gradient" id="Gradient_ai3kg"]
 colors = PackedColorArray(1, 1, 1, 1, 1, 0.164086, 0.199715, 1)
@@ -94,3 +100,7 @@ interpolate = false
 libraries = {
 "": SubResource("AnimationLibrary_mhd5c")
 }
+
+[node name="HitRandomStreamPlayerComponent" parent="." instance=ExtResource("3_8xg06")]
+max_distance = 300.0
+streams = Array[AudioStream]([ExtResource("4_khprg"), ExtResource("5_ub4yq"), ExtResource("6_x8rj0"), ExtResource("7_myjj3"), ExtResource("8_eftnf")])

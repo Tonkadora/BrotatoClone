@@ -2,6 +2,7 @@ extends Node2D
 
 @export var health_component: HealthComponent
 @export var sprite: Sprite2D
+@onready var hit_random_stream_player_component = $HitRandomStreamPlayerComponent
 
 func _ready():
 	$GPUParticles2D.texture = sprite.texture
@@ -17,3 +18,4 @@ func on_died() -> void:
 	entities.add_child(self)
 	global_position = spawn_position
 	$AnimationPlayer.play("default")
+	hit_random_stream_player_component.play_random()
