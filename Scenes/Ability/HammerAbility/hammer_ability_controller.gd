@@ -2,9 +2,10 @@ extends Node
 
 @export var hammer_ability_scene: PackedScene
 
-var speed = 10
+var base_speed = 100
 var range = 50
 var number_of_hammers = 5
+var damage = 1
 
 
 func _ready():
@@ -35,6 +36,20 @@ func spawn_hammers():
 		foreground.add_child(hammer_ability)
 		
 		var increment_angle = deg_to_rad((360 / (number_of_hammers)))
-		var spawn_angle = Vector2.RIGHT.rotated(increment_angle * i)
-		var offset = spawn_angle * range
+		var base_rotation = Vector2.RIGHT.rotated(increment_angle * i)
+		var offset = base_rotation * range
 		hammer_ability.global_position = player.global_position + offset
+		hammer_ability.range = range
+		hammer_ability.base_rotation = base_rotation
+		hammer_ability.base_speed = base_speed
+		hammer_ability.rotate_in_direction()
+		
+		Callable(apply_damage_to_hurtbox.bind(hammer_ability)).call_deferred()
+		
+func apply_damage_to_hurtbox(hammer_ability: HammerAbility):
+	hammer_ability.hurtbox_component.damage = damage
+	
+
+
+func _on_timer_timeout() -> void:
+	base_speed += 5
