@@ -11,12 +11,13 @@ config_version=5
 [application]
 
 config/name="BrotatoClone"
-run/main_scene="res://Scenes/Main/main.tscn"
+run/main_scene="res://Scenes/UI/main_menu.tscn"
 config/features=PackedStringArray("4.3", "Forward Plus")
 
 [autoload]
 
 GameEvents="*res://Scenes/AutoLoad/game_events.tscn"
+MusicPlayer="*res://Scenes/AutoLoad/music_player.tscn"
 
 [debug]
 

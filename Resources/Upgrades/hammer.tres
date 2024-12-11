@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="Ability" load_steps=3 format=3 uid="uid://btv7xvovqnm5d"]
+
+[ext_resource type="PackedScene" uid="uid://cc2hakighvjyx" path="res://Scenes/Ability/HammerAbility/hammer_ability_controller.tscn" id="1_c1d8b"]
+[ext_resource type="Script" path="res://Resources/Upgrades/ability.gd" id="2_pcfm7"]
+
+[resource]
+script = ExtResource("2_pcfm7")
+ability_controller_scene = ExtResource("1_c1d8b")
+id = "hammer"
+max_quantity = 1
+name = "Hammer"
+description = "Hammers that will spin around you."

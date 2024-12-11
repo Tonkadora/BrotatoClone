@@ -5,12 +5,14 @@ var elapsed = 0
 var range: int
 var base_rotation: Vector2
 var base_speed: float
+var target_speed
 @onready var hurtbox_component: HurtboxComponent = $HurtboxComponent
 
 
 func _process(delta: float) -> void:
 	spin()
 	rotate_in_direction()
+	
 	
 func rotate_in_direction():
 	var player = get_tree().get_first_node_in_group("player") as Node2D
@@ -28,5 +30,6 @@ func spin():
 	
 	elapsed += get_process_delta_time()
 	var speed = elapsed * base_speed
+	
 	var current_direction = base_rotation.rotated(deg_to_rad(speed))
 	global_position = player.global_position + (current_direction * range)

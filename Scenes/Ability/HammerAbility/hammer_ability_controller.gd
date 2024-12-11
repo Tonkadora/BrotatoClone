@@ -3,12 +3,14 @@ extends Node
 @export var hammer_ability_scene: PackedScene
 
 var base_speed = 100
+var target_speed 
 var range = 50
-var number_of_hammers = 5
+var number_of_hammers = 1
 var damage = 1
 
 
 func _ready():
+	target_speed = base_speed
 	spawn_hammers()
 	
 
@@ -42,14 +44,27 @@ func spawn_hammers():
 		hammer_ability.range = range
 		hammer_ability.base_rotation = base_rotation
 		hammer_ability.base_speed = base_speed
+		hammer_ability.target_speed = target_speed
 		hammer_ability.rotate_in_direction()
 		
 		Callable(apply_damage_to_hurtbox.bind(hammer_ability)).call_deferred()
 		
+		
 func apply_damage_to_hurtbox(hammer_ability: HammerAbility):
 	hammer_ability.hurtbox_component.damage = damage
 	
-
+func update_current_hammers():
+	var hammers = get_tree().get_nodes_in_group("hammer_ability")
+	if hammers == null || hammers.size() == 0:
+		return
+		
+		
+	for hammer_ability in hammers:
+		hammer_ability.range = range
+		hammer_ability.target_speed = target_speed
+		hammer_ability.hurtbox_component.damage = damage
+		
 
 func _on_timer_timeout() -> void:
-	base_speed += 5
+	target_speed += 5
+	update_current_hammers()
