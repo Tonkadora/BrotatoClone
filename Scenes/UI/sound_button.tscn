@@ -15,4 +15,5 @@ text = "SoundButton"
 script = ExtResource("1_tbbo1")
 
 [node name="RandomStreamComponent" parent="." instance=ExtResource("1_p8kpr")]
+bus = &"sfx"
 streams = Array[AudioStream]([ExtResource("3_tpawa"), ExtResource("4_hiqe7"), ExtResource("5_jnvya"), ExtResource("6_8b7ni"), ExtResource("7_pxi6u")])

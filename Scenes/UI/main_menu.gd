@@ -1,5 +1,7 @@
 extends CanvasLayer
 
+const OPTIONS = preload("res://Scenes/UI/options.tscn")
+
 @onready var play_button = %PlayButton
 @onready var options_button = %OptionsButton
 @onready var quit_button = %QuitButton
@@ -16,8 +18,14 @@ func on_play_pressed():
 	
 	
 func on_options_pressed():
-	pass
+	var options_instance = OPTIONS.instantiate()
+	add_child(options_instance)
+	options_instance.back_pressed.connect(on_options_closed.bind(options_instance))
+ 
 
+func on_options_closed(options_instance: Node) -> void:
+	options_instance.queue_free()
+	
 	
 func on_quit_pressed():
 	get_tree().quit()
