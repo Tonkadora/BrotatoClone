@@ -19,6 +19,8 @@ func set_defeat() -> void:
 	defeated.emit()
 	
 func on_restart_button_pressed() -> void:
+	ScreenTransition.transition()
+	await ScreenTransition.transitioned_halfway
 	get_tree().paused = false
 	animation_player.play("selected")
 	await animation_player.animation_finished
@@ -26,6 +28,8 @@ func on_restart_button_pressed() -> void:
 	
 	
 func on_quit_button_pressed() -> void:
+	ScreenTransition.transition()
+	await ScreenTransition.transitioned_halfway
 	animation_player.play("discarded")
 	await animation_player.animation_finished
 	get_tree().quit()

@@ -21,3 +21,4 @@ func on_player_died() -> void:
 	var end_screen = end_screen_scene.instantiate()
 	add_child(end_screen)
 	end_screen.end_screen_card.set_defeat()
+	MetaProgression.save()
