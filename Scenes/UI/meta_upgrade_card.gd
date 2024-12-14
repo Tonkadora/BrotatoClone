@@ -1,37 +1,45 @@
 extends PanelContainer
 
-signal selected
+
+var upgrade: MetaUpgrade 
 
 @onready var name_label = %NameLabel
 @onready var description_label = %DescriptionLabel
+@onready var progress_bar: ProgressBar = %ProgressBar
+@onready var purchase_button: Button = %PurchaseButton
+@onready var progress_label: Label = %ProgressLabel
+@onready var count_label: Label = %CountLabel
 
-var disabled: bool = false
 
 func _ready():
-	gui_input.connect(on_gui_input)
-	mouse_entered.connect(on_mouse_entered)
+	purchase_button.pressed.connect(on_purchase_pressed)
 	
-func set_ameta_upgrade(upgrade: MetaUpgrade) -> void:
-	name_label.text = upgrade.name
+func set_meta_upgrade(upgrade: MetaUpgrade) -> void:
+	self.upgrade = upgrade
+	name_label.text = upgrade.title
 	description_label.text = upgrade.description
+	update_progress()
+	
 
-
+func update_progress():
+	var currency = MetaProgression.save_data["upgrade_currency"]
+	var percent = currency / upgrade.experience_cost
+	percent = min(percent, 1)
+	progress_bar.value = percent
+	purchase_button.disabled = percent < 1
+	progress_label.text = str(currency) + "/" + str(upgrade.experience_cost)
+	count_label.text = "x%d" % MetaProgression.save_data["upgrades"][upgrade.id]["quantity"]
+	
 func select_card():
-	disabled = true
 	$AnimationPlayer.play("selected")
 
 	
+func on_purchase_pressed():
+	if upgrade == null:
+		return
 	
-func on_gui_input(event: InputEvent) -> void:
-	if disabled:
-		return
-		
-	if event.is_action_pressed("left_click"):
-		select_card()
-
-
-func on_mouse_entered():
-	if disabled:
-		return
-		
-	$HoverAnimationPlayer.play("hover")
+	MetaProgression.add_meta_upgrade(upgrade)
+	MetaProgression.save_data["upgrade_currency"] -= upgrade.experience_cost
+	MetaProgression.save()
+	get_tree().call_group("meta_upgrade_card", "update_progress")
+	select_card()

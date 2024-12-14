@@ -178,6 +178,11 @@ layout_mode = 2
 text = "Restart
 "
 
+[node name="MenuButton" parent="MarginContainer/VBoxContainer/VBoxContainer" instance=ExtResource("3_3p3sd")]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Return To Menu"
+
 [node name="QuitButton" parent="MarginContainer/VBoxContainer/VBoxContainer" instance=ExtResource("3_3p3sd")]
 unique_name_in_owner = true
 layout_mode = 2

@@ -43,6 +43,7 @@ entities_layer=""
 foreground_layer=""
 upgrade_card=""
 hammer_ability=""
+meta_upgrade_card=""
 
 [gui]
 
