@@ -1,14 +1,16 @@
 extends CanvasLayer
 
 const OPTIONS = preload("res://Scenes/UI/options.tscn")
-
+const META_MENU = preload("res://Scenes/UI/meta_menu.tscn")
 @onready var play_button = %PlayButton
 @onready var options_button = %OptionsButton
 @onready var quit_button = %QuitButton
+@onready var upgrade_button: Button = %UpgradeButton
 
 func _ready():
 	play_button.pressed.connect(on_play_pressed)
 	options_button.pressed.connect(on_options_pressed)
+	upgrade_button.pressed.connect(on_upgrades_pressed)
 	quit_button.pressed.connect(on_quit_pressed)
 	
 	
@@ -29,6 +31,14 @@ func on_options_pressed():
 
 func on_options_closed(options_instance: Node) -> void:
 	options_instance.queue_free()
+	
+
+func on_upgrades_pressed():
+	ScreenTransition.transition()
+	await ScreenTransition.transitioned_halfway
+	var meta_menu = META_MENU.instantiate()
+	add_child(meta_menu)
+
 	
 	
 func on_quit_pressed():

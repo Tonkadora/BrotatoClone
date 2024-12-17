@@ -14,21 +14,28 @@ var upgrade: MetaUpgrade
 func _ready():
 	purchase_button.pressed.connect(on_purchase_pressed)
 	
-func set_meta_upgrade(upgrade: MetaUpgrade) -> void:
-	self.upgrade = upgrade
+func set_meta_upgrade(_upgrade: MetaUpgrade) -> void:
+	self.upgrade = _upgrade
 	name_label.text = upgrade.title
 	description_label.text = upgrade.description
 	update_progress()
 	
 
 func update_progress():
+	var current_quantity = 0
+	if  MetaProgression.save_data["upgrades"].has(upgrade.id):
+		current_quantity =  MetaProgression.save_data["upgrades"][upgrade.id]["quantity"]
+		
+	var is_maxed = current_quantity == upgrade.max_quantity
 	var currency = MetaProgression.save_data["upgrade_currency"]
 	var percent = currency / upgrade.experience_cost
 	percent = min(percent, 1)
 	progress_bar.value = percent
-	purchase_button.disabled = percent < 1
+	purchase_button.disabled = percent < 1 || is_maxed
+	if is_maxed:
+		purchase_button.text = "Maxed Out"
 	progress_label.text = str(currency) + "/" + str(upgrade.experience_cost)
-	count_label.text = "x%d" % MetaProgression.save_data["upgrades"][upgrade.id]["quantity"]
+	count_label.text = "x%d" % current_quantity
 	
 func select_card():
 	$AnimationPlayer.play("selected")

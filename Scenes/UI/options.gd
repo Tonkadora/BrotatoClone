@@ -16,9 +16,9 @@ func _ready():
 	update_display()
 
 func update_display():
-	window_button.text = "Windowed"
+	window_button.text = "FullScreen"
 	if DisplayServer.window_get_mode() == DisplayServer.WINDOW_MODE_FULLSCREEN:
-		window_button.text = "Fullscreen"
+		window_button.text = "Windowed"
 	sfx_slider.value = get_bus_volume_percent("sfx")
 	music_slider.value = get_bus_volume_percent("music")
 		
